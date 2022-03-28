@@ -1,0 +1,20 @@
+{
+  "name": "auth",
+  "version": "1.0.0",
+  "description": "This project gives a idea on how we can make our website more secure with additional security features, we will be making our hands dirtier on creating a secret keeper where the secret can be viewed only when the user is authorised ,we will learn about auth ,oAuth ,social logins,passport js ,cookies,sessions,creating token excetra .... ",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.19.2",
+    "dotenv": "^16.0.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.3",
+    "mongoose": "^6.2.8",
+    "mongoose-encryption": "^2.1.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Bhuvan",
+  "license": "ISC"
+}
