@@ -7,6 +7,9 @@ const bodyParser = require("body-parser");
 //For encrypting the plain text
 const encrypt = require("mongoose-encryption");
 
+//For Hashing we use md5 package
+const md5 = require("md5");
+
 const app = express();
 const PORT = 3000 || process.env.PORT;
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -30,8 +33,8 @@ const userSchema = new mongoose.Schema({
   password: String,
 });
 
-let secret = process.env.SECRET;
-userSchema.plugin(encrypt, { secret: secret, encryptedFields: ["password"] });
+// let secret = process.env.SECRET;
+//? userSchema.plugin(encrypt, { secret: secret, encryptedFields: ["password"] });
 
 //Creating a collection called user which will automatically rename as users which follows userSchema
 const User = new mongoose.model("User", userSchema);
@@ -46,11 +49,13 @@ app.get("/register", function (req, res) {
   res.render("register");
 });
 
-//The data recieved from /register is available here
+//ENCRYPTION:The data recieved from /register is available here
 app.post("/register", function (req, res) {
   const newUser = new User({
     email: req.body.username,
-    password: req.body.password,
+    // password: req.body.password,
+    //HASHING
+    password: md5(req.body.password),
   });
   newUser.save(function (err) {
     if (err) {
@@ -64,7 +69,7 @@ app.post("/register", function (req, res) {
 //The data recieved from /login is available here
 app.post("/login", function (req, res) {
   const userName = req.body.username;
-  const password = req.body.password;
+  const password = md5(req.body.password);
   //Rendering the secrets page only when the user credentials match with the details in database ...
   User.findOne({ email: userName }, function (err, foundUser) {
     if (err) {
